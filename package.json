@@ -8,5 +8,8 @@
     "start": "node ./src/app.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "discord-interactions": "^3.4.0"
+  }
 }
