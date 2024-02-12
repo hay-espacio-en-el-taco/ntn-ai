@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'src/**'
-      - '.github/workflows/deploy-discord-bot.yml'
-      - 'app.py'
-      - 'package-lock.json'
+    # paths:
+    #   - 'src/**'
+    #   - '.github/workflows/deploy-discord-bot.yml'
+    #   - 'app.py'
+    #   - 'package-lock.json'
 
 jobs:
   deploy:
