@@ -62,8 +62,10 @@ main(argv[2], argv[3], process.env)
     (err) => {
       console.error(err);
       const text = JSON.stringify({
-        type: err.name,
-        message: err.message
+        error: {
+          type: err.name,
+          message: err.message
+        }
       });
       fs.writeFileSync('result.json', text);
     }
