@@ -1,3 +1,5 @@
+import { InteractionResponseType } from 'discord-interactions';
+
 /**
  * Application Command Types
  * https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types
@@ -12,10 +14,12 @@ export default {
     description: 'Basic command',
     type: CHAT_INPUT,
     handler: () => {
+      const pilingaLength = Math.floor(27 * Math.random());
+
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: 'Ahora sí ya charcha!'
+          content: `Te mide ${pilingaLength}cm`
         },
       };
     }
