@@ -14,7 +14,7 @@ image = Image.from_dockerfile("./Dockerfile", context_mount=Mount.from_local_dir
 async def foo(request: Request):
     body = await request.body()
     headers = json.dumps(jsonable_encoder(request.headers))
-    subprocess.run(["node", "/usr/app/src/discord-interactions.js", body, headers])
+    subprocess.run(["npm", "start", body, headers])
     
     f = open("result.json", "r")
     result = f.read()
