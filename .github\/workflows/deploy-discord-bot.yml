@@ -1,0 +1,45 @@
+name: 'Discord Bot | Deploy to Modal service and update commands'
+
+on:
+  push:
+    branches:
+      - master
+    # paths:
+    #   - 'src/**'
+    #   - '.github/workflows/deploy-discord-bot.yml'
+    #   - 'app.py'
+    #   - 'package-lock.json'
+
+jobs:
+  deploy:
+    name: 'Deploy to Modal'
+    runs-on: ubuntu-latest
+    env:
+      LATEST_RELEASE_CARDS_FILE: ./web-page/src/cards.json
+    
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Modal 
+        run: |
+          pip install modal
+          modal token set --token-secret "${{ secrets.MODAL_TOKEN }}"
+      
+      - name: Deploy to Modal
+        run: |
+          modal deploy app.py
+
+      - name: Register Discord Commands
+        run: |
+          npm run discord:register-commands
