@@ -15,6 +15,7 @@ jobs:
     name: 'Deploy to Modal'
     runs-on: ubuntu-latest
     env:
+      DISCORD_APP_ID: ${{ secrets.DISCORD_APP_ID  }}
       DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN  }}
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET  }}
