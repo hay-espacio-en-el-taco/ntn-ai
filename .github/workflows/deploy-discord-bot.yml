@@ -3,7 +3,7 @@ name: 'Deploy to Modal service and update commands'
 on:
   push:
     branches:
-      - master
+      - main
     # paths:
     #   - 'src/**'
     #   - '.github/workflows/deploy-discord-bot.yml'
