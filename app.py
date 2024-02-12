@@ -17,10 +17,9 @@ async def interactions(request: Request):
     f = open("result.json", "r")
     result = f.read()
     f.close()
-
     parsedResult = json.loads(result)
 
-    if hasattr(parsedResult, 'error'):
-        return Response(content='Bad request signature', status_code='401')
+    if 'error' in parsedResult:
+        return Response(content='Bad request signature', status_code=401)
     else:
         return Response(content=result, media_type="application/json")
