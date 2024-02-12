@@ -1,4 +1,4 @@
-name: 'Discord Bot | Deploy to Modal service and update commands'
+name: 'Deploy to Modal service and update commands'
 
 on:
   push:
