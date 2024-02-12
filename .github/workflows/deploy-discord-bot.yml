@@ -15,7 +15,9 @@ jobs:
     name: 'Deploy to Modal'
     runs-on: ubuntu-latest
     env:
-      LATEST_RELEASE_CARDS_FILE: ./web-page/src/cards.json
+      DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN  }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET  }}
     
     steps:
       - name: Check out repository code
@@ -32,14 +34,10 @@ jobs:
           node-version: 20
 
       - name: Setup Modal 
-        run: |
-          pip install modal
-          modal token set --token-secret "${{ secrets.MODAL_TOKEN }}"
+        run: pip install modal
       
       - name: Deploy to Modal
-        run: |
-          modal deploy app.py
+        run: modal deploy app.py
 
       - name: Register Discord Commands
-        run: |
-          npm run discord:register-commands
+        run: npm run discord:register-commands
