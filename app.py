@@ -7,7 +7,7 @@ from modal import Image, Stub, web_endpoint, Mount, Secret
 stub = Stub(name="ntn-ai")
 image = Image.from_dockerfile("./Dockerfile", context_mount=Mount.from_local_dir("./"), add_python="3.12")
 
-@stub.function(image=image, secrets=[Secret.from_name("NTN ai")])
+@stub.function(image=image, secrets=[Secret.from_name("NTN ai")], keep_warm=1)
 @web_endpoint(method="POST")
 async def interactions(request: Request):
     body = await request.body()
