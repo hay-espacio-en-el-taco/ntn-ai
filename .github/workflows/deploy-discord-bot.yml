@@ -40,4 +40,6 @@ jobs:
         run: modal deploy app.py
 
       - name: Register Discord Commands
-        run: npm run discord:register-commands
+        run: |
+          npm install
+          npm run discord:register-commands
