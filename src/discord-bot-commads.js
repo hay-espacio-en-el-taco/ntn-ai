@@ -8,19 +8,23 @@ const CHAT_INPUT = '1'; // Slash commands; a text-based command that shows up wh
 const USER       = '2'; // A UI-based command that shows up when you right click or tap on a user
 const MESSAGE    = '3'; // A UI-based command that shows up when you right click or tap on a message
 
+export const DEFERRED_RESPONSE = {
+  type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+  data: {
+    content: 'Pensando...'
+  }
+};
 
 export default {
   'pilinga': {
+    isDeferred: true,
     description: 'Basic command',
     type: CHAT_INPUT,
     handler: () => {
       const pilingaLength = Math.floor(27 * Math.random());
 
       return {
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          content: `Te mide ${pilingaLength}cm`
-        },
+        content: `Te mide ${pilingaLength}cm`
       };
     }
   },

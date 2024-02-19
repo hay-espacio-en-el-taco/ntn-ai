@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/discord-interactions.js",
+    "discord:deferred": "node ./src/discord-deferred-command.js",
     "discord:register-commands": "node ./src/register-discord-commands.js"
   },
   "author": "NTN",

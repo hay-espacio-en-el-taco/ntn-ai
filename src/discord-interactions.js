@@ -1,14 +1,15 @@
 import fs from 'node:fs';
 import { argv } from 'node:process';
 import { InteractionType, InteractionResponseType, verifyKey } from 'discord-interactions';
-import DISCORD_BOT_COMMADS from './discord-bot-commads.js'
+import DISCORD_BOT_COMMADS, { DEFERRED_RESPONSE } from './discord-bot-commads.js'
 
 
 const DISCORD_FUNCTIONS = {
   [InteractionType.PING]: () => {
     return { type: InteractionResponseType.PONG };
   },
-  [InteractionType.APPLICATION_COMMAND]: (data) => {
+  [InteractionType.APPLICATION_COMMAND]: (body) => {
+    const { data } = body;
     const { name } = data;
     const command = DISCORD_BOT_COMMADS[name];
 
@@ -21,9 +22,16 @@ const DISCORD_FUNCTIONS = {
       };
     }
 
+    if (command.isDeferred) {
+      return {
+        deferred: JSON.stringify(DEFERRED_RESPONSE)
+      };
+    }
+
     return command.handler(data);
   },
 }
+
 const TESTING_FN = (body, headers) => {
   return { body, headers };
 }
@@ -46,9 +54,8 @@ async function main(bodyRaw, headersRaw, env) {
     throw new Error('Not a valid request');
   }
 
-  const { type, data } = body;
-
-  return (DISCORD_FUNCTIONS[type] || TESTING_FN)(data, headers);
+  const { type } = body;
+  return (DISCORD_FUNCTIONS[type] || TESTING_FN)(body, headers);
 }
 
 main(argv[2], argv[3], process.env)

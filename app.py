@@ -22,4 +22,6 @@ async def interactions(request: Request):
     if 'error' in parsedResult:
         return Response(content='Bad request signature', status_code=401)
     else:
-        return Response(content=result, media_type="application/json")
+        if 'deferred' in parsedResult:
+            subprocess.Popen(["npm", "run", "discord:deferred", body, headers])
+        return Response(content=parsedResult.get('deferred'), media_type="application/json")
