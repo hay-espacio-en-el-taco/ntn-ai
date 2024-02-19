@@ -30,7 +30,7 @@ const RESPONSES = {
 };
 
 function getSize() {
-    const isBadLuck = SMALL_PILINGA_RATE >= Math.random();
+    const isBadLuck = SMALL_PILINGA_RATE <= Math.random();
 
     let pilingaLength;
     if (isBadLuck) {
