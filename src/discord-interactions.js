@@ -28,7 +28,7 @@ const DISCORD_FUNCTIONS = {
       };
     }
 
-    return command.handler(data);
+    return command.handler(body);
   },
 }
 

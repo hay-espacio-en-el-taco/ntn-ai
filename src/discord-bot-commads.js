@@ -1,4 +1,5 @@
 import { InteractionResponseType } from 'discord-interactions';
+import pilingaFn from './pilinga-command.js'
 
 /**
  * Application Command Types
@@ -20,12 +21,6 @@ export default {
     isDeferred: true,
     description: 'Basic command',
     type: CHAT_INPUT,
-    handler: () => {
-      const pilingaLength = Math.floor(27 * Math.random());
-
-      return {
-        content: `Te mide ${pilingaLength}cm`
-      };
-    }
+    handler: pilingaFn
   },
 };

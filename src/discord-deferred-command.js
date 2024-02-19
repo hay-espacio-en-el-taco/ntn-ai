@@ -23,7 +23,7 @@ const DISCORD_FUNCTIONS = {
       };
     }
 
-    const response = await command.handler(data);
+    const response = await command.handler(body);
 
     /**
      * Using the endpoint to update original response
