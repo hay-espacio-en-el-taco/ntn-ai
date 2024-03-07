@@ -78,6 +78,18 @@ function makeItFunny(pilingaSize, userId) {
     return template({pilingaSize, userId});
 }
 
+const LOADING_STATE_RESPONSES = [
+    'midiendo...',
+    'midiendo tu pilinga...',
+    'sacando la cinta de medir...',
+    'yendo por la regla para medirla...',
+];
+
+export function generatePilingaSizingTextResponse() {
+    const responseIdx = Math.floor(Math.random() * LOADING_STATE_RESPONSES.length); // Pick one randomly
+    return LOADING_STATE_RESPONSES[responseIdx];
+}
+
 export default function(body) {
     const userId = body?.member?.user?.id;
     const pilingaSize = getSize();

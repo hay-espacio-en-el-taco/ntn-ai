@@ -3,6 +3,17 @@ import { argv } from 'node:process';
 import { InteractionType, InteractionResponseType, verifyKey } from 'discord-interactions';
 import DISCORD_BOT_COMMADS, { DEFERRED_RESPONSE } from './discord-bot-commads.js'
 
+function getDeferredResponse(responseTextFn) {
+  const hasProceduralTextFn = typeof responseTextFn === 'function';
+  const textResponse = hasProceduralTextFn ? responseTextFn() : 'Pensando...';
+
+  return {
+    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      content: textResponse
+    }
+  };
+};
 
 const DISCORD_FUNCTIONS = {
   [InteractionType.PING]: () => {
@@ -22,10 +33,10 @@ const DISCORD_FUNCTIONS = {
       };
     }
 
-    if (command.isDeferred) {
-      return {
-        deferred: JSON.stringify(DEFERRED_RESPONSE)
-      };
+    console.log('Wow, such payload', JSON.stringify(body));
+
+    if (typeof command.isDeferred) {
+      return getDeferredResponse(command.getDeferredLoadingStateText);
     }
 
     return command.handler(body);
