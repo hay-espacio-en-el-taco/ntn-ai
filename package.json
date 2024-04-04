@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "app.js",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/discord-interactions.js",
+    "start": "node index.mjs",
     "discord:deferred": "node ./src/discord-deferred-command.js",
     "discord:register-commands": "node ./src/register-discord-commands.js"
   },
   "author": "NTN",
   "license": "MIT",
   "dependencies": {
+    "aws-xray-sdk": "^3.6.0",
     "discord-interactions": "^3.4.0",
     "node-fetch": "^3.3.2"
   }

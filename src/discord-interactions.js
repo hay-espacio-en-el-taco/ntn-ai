@@ -1,11 +1,12 @@
-import fs from 'node:fs';
-import { argv } from 'node:process';
 import { InteractionType, InteractionResponseType, verifyKey } from 'discord-interactions';
-import DISCORD_BOT_COMMADS, { DEFERRED_RESPONSE } from './discord-bot-commads.js'
+import { deferredResponse } from './discord-utils.js';
+import DISCORD_BOT_COMMADS from './discord-bot-commads.js'
 
 function getDeferredResponse(responseTextFn) {
   const hasProceduralTextFn = typeof responseTextFn === 'function';
-  const textResponse = hasProceduralTextFn ? responseTextFn() : 'Pensando...';
+  const textResponse = hasProceduralTextFn ? responseTextFn() : 'reflexionando...';
+
+  console.log('Wow, such deferred text', textResponse);
 
   return {
     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
@@ -35,11 +36,15 @@ const DISCORD_FUNCTIONS = {
 
     console.log('Wow, such payload', JSON.stringify(body));
 
-    if (typeof command.isDeferred) {
+    if (command.isDeferred) {
+      deferredResponse(command.handler, body);
       return getDeferredResponse(command.getDeferredLoadingStateText);
     }
 
-    return command.handler(body);
+    return {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: command.handler(body)
+    };
   },
 }
 
@@ -47,44 +52,28 @@ const TESTING_FN = (body, headers) => {
   return { body, headers };
 }
 
-async function main(bodyRaw, headersRaw, env) {
-  const headers = JSON.parse(headersRaw);
-  const isDevEnv = headers['host'].includes('dev.modal.run');
-  const body = JSON.parse(bodyRaw);
+export async function main(signature, bodyRaw, discordPublicKey, isDevEnv = false) {
   let isValidRequest = false;
+  const body = JSON.parse(bodyRaw);
 
   if (isDevEnv) {
     isValidRequest = true;
   } else {
-    const signature = headers['x-signature-ed25519'];
-    const timestamp = headers['x-signature-timestamp'];
-    isValidRequest = verifyKey(bodyRaw, signature, timestamp, env.DISCORD_PUBLIC_KEY);
+    isValidRequest = verifyKey(bodyRaw, signature.ed25519, signature.timestamp, discordPublicKey);
   }
 
   if (!isValidRequest) {
-    throw new Error('Not a valid request');
+    return {
+      statusCode: 401,
+      body: 'Bad request signature'
+    };
   }
 
   const { type } = body;
-  return (DISCORD_FUNCTIONS[type] || TESTING_FN)(body, headers);
+  return {
+    statusCode: 200,
+    body: JSON.stringify( (DISCORD_FUNCTIONS[type] || TESTING_FN)(body) )
+  }
 }
 
-main(argv[2], argv[3], process.env)
-  .then(
-    (response) => {
-      const text = JSON.stringify(response);
-      fs.writeFileSync('result.json', text);
-    }
-  )
-  .catch(
-    (err) => {
-      console.error(err);
-      const text = JSON.stringify({
-        error: {
-          type: err.name,
-          message: err.message
-        }
-      });
-      fs.writeFileSync('result.json', text);
-    }
-  );
+export default main;
