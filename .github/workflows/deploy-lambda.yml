@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     name: 'Build Zip file'
@@ -49,7 +53,6 @@ jobs:
       - name: Configure AWS Credentials for China region audience
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          id-token: write
           aws-region: us-east-2
           role-to-assume: arn:aws:iam::058264239687:role/lasActionsDeNTNai
 
