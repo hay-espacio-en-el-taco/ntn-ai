@@ -9,9 +9,6 @@ jobs:
   build:
     name: 'Build Zip file'
     runs-on: ubuntu-latest
-    env:
-      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET  }}
     
     steps:
       - name: Check out repository code
@@ -38,7 +35,7 @@ jobs:
   deploy:
     name: 'Update Lambda from Zip file'
     runs-on: ubuntu-latest
-    needs: modal
+    needs: build
     env:
       DISCORD_APP_ID: ${{ secrets.DISCORD_APP_ID  }}
       DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN  }}
