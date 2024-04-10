@@ -29,6 +29,18 @@ const RESPONSES = {
     ]),
 };
 
+const templateString = (strings, ...keys) => (
+    (dict = {}) => {
+        var result = [strings[0]];
+        keys.forEach(
+            (key, i) => {
+                result.push(dict[key], strings[i + 1])
+            }
+        );
+        return result.join('');
+    }
+);
+
 function getSize() {
     const isBadLuck = Math.random() <= SMALL_PILINGA_RATE;
 
@@ -43,18 +55,6 @@ function getSize() {
 
     return pilingaLength;
 }
-
-const templateString = (strings, ...keys) => (
-    (dict = {}) => {
-        var result = [strings[0]];
-        keys.forEach(
-            (key, i) => {
-                result.push(dict[key], strings[i + 1])
-            }
-        );
-        return result.join('');
-    }
-);
 
 function makeItFunny(pilingaSize, userId) {
     let type = 'AVERAGE_LUCK_MESSAGES';

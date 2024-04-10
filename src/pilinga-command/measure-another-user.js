@@ -12,7 +12,7 @@ const RESPONSES = {
     ]),
     'SMALL_PILINGA': (tagFn) => ([
         tagFn `<@${'idOfWhoRequested'}> se asoma y sólo ve los tristes ${'pilingaSize'}cm de <@${'otherUserId'}>`,
-        tagFn `<@${'idOfWhoRequested'}> se asoma en los pantalones de <@${'otherUserId'}> y ve unos pobres ${'pilingaSize'}cm pilinga`,
+        tagFn `<@${'idOfWhoRequested'}> se asoma en los pantalones de <@${'otherUserId'}> y ve unos pobres ${'pilingaSize'}cm de pilinga`,
     ]),
     'AVERAGE_LUCK_MESSAGES': (tagFn) => ([
         tagFn `<@${'idOfWhoRequested'}> agarra los ${'pilingaSize'}cm de <@${'otherUserId'}>`,
@@ -22,10 +22,11 @@ const RESPONSES = {
         tagFn `<@${'idOfWhoRequested'}> agarra los impresionantes ${'pilingaSize'}cm de <@${'otherUserId'}>`,
         tagFn `<@${'idOfWhoRequested'}> sostiene el sablesote de ${'pilingaSize'}cm de <@${'otherUserId'}>`,
         tagFn `<@${'idOfWhoRequested'}> casi se atraganta con los ${'pilingaSize'}cm de tremenda pilinga de <@${'otherUserId'}>`,
-        tagFn `<@${'idOfWhoRequested'}> se pica el ojo con ${'pilingaSize'}cm de tremenda pilinga de <@${'otherUserId'}>`,
+        tagFn `<@${'idOfWhoRequested'}> se pica el ojo con tremendos ${'pilingaSize'}cm pilinga de <@${'otherUserId'}>`,
     ]),
     'BIG_PILINGA_BUT_INSIDE': (tagFn) => ([
-        tagFn `<@${'idOfWhoRequested'}> tiene unos impresionantes ${'pilingaSize'}cm de rica pilinga... ¡Pero adentro!`,
+        tagFn `<@${'idOfWhoRequested'}> intenta medir pero se tropieza y cae encima de los impresionantes ${'pilingaSize'}cm de rica pilinga de <@${'otherUserId'}>`,
+        tagFn `<@${'idOfWhoRequested'}> sostiene el sablesote de ${'pilingaSize'}cm de <@${'otherUserId'}> y le da un beso de la emoción`,
     ]),
 };
 
