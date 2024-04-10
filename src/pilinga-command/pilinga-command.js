@@ -18,7 +18,7 @@ export default function(body) {
     const msgFn = isFromSomeOneElse ? getMeasureOfSomeoneElse : getMeasureOfYourself;
 
     const userId = body?.member?.user?.id;
-    const userToWhomYouMeasure = body?.data?.options[0]?.value;
+    const userToWhomYouMeasure = isFromSomeOneElse ? body?.data?.options[0]?.value : null;
 
     return {
         content: msgFn(userId, userToWhomYouMeasure)
