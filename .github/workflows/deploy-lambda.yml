@@ -50,10 +50,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: elzip
-      
-      - name: Display folder to check artifact
-        run: ls -ll
-
 
       - name: Configure AWS Credentials for China region audience
         uses: aws-actions/configure-aws-credentials@v4
