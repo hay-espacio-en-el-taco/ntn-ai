@@ -42,7 +42,7 @@ const templateString = (strings, ...keys) => (
 );
 
 function getSize() {
-    const isBadLuck = Math.random() <= MALL_PILINGA_RATE;
+    const isBadLuck = Math.random() <= SMALL_PILINGA_RATE;
 
     let pilingaLength;
     if (isBadLuck) {
