@@ -1,4 +1,3 @@
-import { InteractionResponseType } from 'discord-interactions';
 import pilingaFn, { generatePilingaSizingTextResponse } from './pilinga-command.js'
 
 
@@ -12,7 +11,7 @@ const APPLICATION_COMMAND_TYPES = {
     MESSAGE   : '3', // A UI-based command that shows up when you right click or tap on a message
 };
 
-const COMMAND_OPTIONS_TYPE = {
+const COMMAND_OPTION_TYPES = {
   SUB_COMMAND: 1, // 
   SUB_COMMAND_GROUP: 2, // 
   STRING: 3, // 
@@ -29,18 +28,38 @@ const COMMAND_OPTIONS_TYPE = {
 
 export default {
   'pilinga': {
-    isDeferred: true,
+    isDeferred: false,
     description: 'El bot te mide la pilinga, o bien, si eliges un usuario entonces se la mides tú a dicho usuario',
     type: APPLICATION_COMMAND_TYPES.CHAT_INPUT,
     getDeferredLoadingStateText: generatePilingaSizingTextResponse,
     handler: pilingaFn,
     options: [
       {
-        type: COMMAND_OPTIONS_TYPE.USER,
-        name: 'Usuario',
-        description: 'Usuario a quien se la quieres medir',
-        required: false,
-      }
+          "name": "usuario",
+          "description": "Usuario a quien se la quieres medir",
+          "type": COMMAND_OPTION_TYPES.USER,
+          "required": false
+      },
     ],
+    // options: [
+    //   {
+    //     "name": "tuya",
+    //     "description": "El bot te mide la pilinga",
+    //     "type": COMMAND_OPTION_TYPES.SUB_COMMAND,
+    //   },
+    //   {
+    //     "name": "ajena",
+    //     "description": "Tú le mides la pilinga a un usuario",
+    //     "type": COMMAND_OPTION_TYPES.SUB_COMMAND,
+    //     "options": [
+    //       {
+    //           "name": "usuario",
+    //           "description": "Usuario a quien se la quieres medir",
+    //           "type": COMMAND_OPTION_TYPES.USER,
+    //           "required": true
+    //       },
+    //     ]
+    //   },
+    // ],
   },
 };
