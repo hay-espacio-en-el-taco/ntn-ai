@@ -1,20 +1,19 @@
 import { InteractionType, InteractionResponseType, verifyKey } from 'discord-interactions';
-import { deferredResponse } from './discord-utils.js';
 import DISCORD_BOT_COMMADS from './discord-bot-commads.js'
 
-function getDeferredResponse(responseTextFn) {
-  const hasProceduralTextFn = typeof responseTextFn === 'function';
-  const textResponse = hasProceduralTextFn ? responseTextFn() : 'reflexionando...';
+// function getDeferredResponse(responseTextFn) {
+//   const hasProceduralTextFn = typeof responseTextFn === 'function';
+//   const textResponse = hasProceduralTextFn ? responseTextFn() : 'reflexionando...';
 
-  console.log('Wow, such deferred text', textResponse);
+//   console.log('Wow, such deferred text', textResponse);
 
-  return {
-    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-    data: {
-      content: textResponse
-    }
-  };
-};
+//   return {
+//     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+//     data: {
+//       content: textResponse
+//     }
+//   };
+// };
 
 const DISCORD_FUNCTIONS = {
   [InteractionType.PING]: () => {
@@ -36,10 +35,10 @@ const DISCORD_FUNCTIONS = {
 
     console.log('Wow, such payload', JSON.stringify(body));
 
-    if (command.isDeferred) {
-      deferredResponse(command.handler, body);
-      return getDeferredResponse(command.getDeferredLoadingStateText);
-    }
+    // if (command.isDeferred) {
+    //   deferredResponse(command.handler, body);
+    //   return getDeferredResponse(command.getDeferredLoadingStateText);
+    // }
 
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
