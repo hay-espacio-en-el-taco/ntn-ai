@@ -22,10 +22,12 @@ async function InstallGlobalCommands(appId, commands) {
   console.log('Commands pushed succesfully!', data);
 }
 
-InstallGlobalCommands(process.env.DISCORD_APP_ID, getAllCommandsForRegister())
-.catch(
+InstallGlobalCommands(process.env.DISCORD_APP_ID, getAllCommandsForRegister()).catch(
   err => {
     console.error(err);
-    process.exit(1);
+
+    // Good practice to set the value instead of calling 'process.exit([number])'.
+    // More information on this matter go here: https://stackoverflow.com/a/37592669
+    process.exitCode = 1;
   }
 );
