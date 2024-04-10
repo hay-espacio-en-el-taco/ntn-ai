@@ -14,11 +14,14 @@ export function generatePilingaSizingTextResponse() {
 }
 
 export default function(body) {
-    const isFromSomeOneElse = body?.data?.options?.length;
-    const msgFn = isFromSomeOneElse ? getMeasureOfSomeoneElse : getMeasureOfYourself;
-
+    const hasUserAsInput = body?.data?.options?.length;
     const userId = body?.member?.user?.id;
-    const userToWhomYouMeasure = isFromSomeOneElse ? body?.data?.options[0]?.value : null;
+    
+    const userToWhomYouMeasure = hasUserAsInput ? body?.data?.options[0]?.value : null;
+    const isFromSomeOneElse = userToWhomYouMeasure && userId !== userToWhomYouMeasure
+    const shouldMesaureOtherPerson = hasUserAsInput && isFromSomeOneElse
+
+    const msgFn = shouldMesaureOtherPerson ? getMeasureOfSomeoneElse : getMeasureOfYourself;
 
     return {
         content: msgFn(userId, userToWhomYouMeasure)
