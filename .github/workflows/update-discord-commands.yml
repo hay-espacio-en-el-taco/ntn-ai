@@ -10,7 +10,7 @@ jobs:
   commands:
     name: 'Update Discord commands'
     runs-on: ubuntu-latest
-    needs: modal
+
     env:
       DISCORD_APP_ID: ${{ secrets.DISCORD_APP_ID  }}
       DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN  }}
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
