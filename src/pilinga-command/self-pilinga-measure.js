@@ -1,4 +1,4 @@
-const SMALL_PILINGA_RATE = 0.35; // 35% chance of small pilinga
+const SMALL_PILINGA_RATE = 0.50; // 50% chance of small pilinga
 const SMALL_PILINGA_MAX_SIZE = 10; // Size in centimeters
 const MAX_EXTRA_PILINGA_AMOUNT = 17; // Size in centimeters. Extra amount after small pilinga size.
 const BIG_PILINGA_MIN_SIZE = 18; // Size in centimeters

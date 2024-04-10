@@ -2,7 +2,7 @@ const SMALL_PILINGA_RATE = 0.10; // 10% chance of small pilinga
 const SMALL_PILINGA_MAX_SIZE = 10; // Size in centimeters
 const MAX_EXTRA_PILINGA_AMOUNT = 17; // Size in centimeters. Extra amount after small pilinga size.
 const BIG_PILINGA_MIN_SIZE = 18; // Size in centimeters
-const PILINGA_INSIDE_RATE = .69 // 69% chance of pilinga being inside
+const PILINGA_INSIDE_RATE = .469 // 46.9% chance of pilinga being inside
 
 const RESPONSES = {
     'ZERO_PILINGA': (tagFn) => ([
