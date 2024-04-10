@@ -2,7 +2,7 @@ const SMALL_PILINGA_RATE = 0.35; // 35% chance of small pilinga
 const SMALL_PILINGA_MAX_SIZE = 10; // Size in centimeters
 const MAX_EXTRA_PILINGA_AMOUNT = 17; // Size in centimeters. Extra amount after small pilinga size.
 const BIG_PILINGA_MIN_SIZE = 18; // Size in centimeters
-const PILINGA_INSIDE_RATE = .6 // 60% chance of pilinga being inside
+const PILINGA_INSIDE_RATE = .4 // 40% chance of pilinga being inside
 
 const RESPONSES = {
     'ZERO_PILINGA': (tagFn) => ([
@@ -78,24 +78,7 @@ function makeItFunny(pilingaSize, userId) {
     return template({pilingaSize, userId});
 }
 
-const LOADING_STATE_RESPONSES = [
-    'midiendo...',
-    'midiendo tu pilinga...',
-    'sacando la cinta de medir...',
-    'yendo por la regla para medirla...',
-];
-
-export function generatePilingaSizingTextResponse() {
-    const responseIdx = Math.floor(Math.random() * LOADING_STATE_RESPONSES.length); // Pick one randomly
-    return LOADING_STATE_RESPONSES[responseIdx];
-}
-
-export default function(body) {
-    const userId = body?.member?.user?.id;
+export default function(userId) {
     const pilingaSize = getSize();
-    const funnyMessage = makeItFunny(pilingaSize, userId);
-
-    return {
-        content: funnyMessage
-    };
+    return makeItFunny(pilingaSize, userId);
 }
