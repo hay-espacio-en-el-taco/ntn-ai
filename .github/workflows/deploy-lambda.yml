@@ -46,16 +46,16 @@ jobs:
       DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN  }}
 
     steps:
-      - name: Download a single artifact
+      - name: Download the Zip artifact
         uses: actions/download-artifact@v4
         with:
           name: elzip
 
-      - name: Configure AWS Credentials for China region audience
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-east-2
           role-to-assume: arn:aws:iam::058264239687:role/lasActionsDeNTNai
 
-      - name: Deploy to lambda
+      - name: Deploy to lambda via Zip file
         run: aws lambda update-function-code --function-name ntnBot --zip-file fileb://elzip.zip
