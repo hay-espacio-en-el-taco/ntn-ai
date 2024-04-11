@@ -1,7 +1,20 @@
+import {
+    templateString, 
+
+    /**
+     * Pilinga size is a number between 0 - SMALL_PILINGA_MAX_SIZE in case of 
+     * "Bad Luck" or a number between SMALL_PILINGA_MAX_SIZE - (SMALL_PILINGA_MAX_SIZE + MAX_EXTRA_PILINGA_AMOUNT) if
+     * not "Bad Luck".
+     * 
+     * The BIG_PILINGA_MIN_SIZE value is used just to determine if they have a generous Shlong and to generate
+     * a message acordingly. The SMALL_PILINGA_MAX_SIZE value is also used to customize messages.
+     */
+    SMALL_PILINGA_MAX_SIZE,
+    MAX_EXTRA_PILINGA_AMOUNT,
+    BIG_PILINGA_MIN_SIZE
+} from './utils.js';
+
 const SMALL_PILINGA_RATE = 0.50; // 50% chance of small pilinga
-const SMALL_PILINGA_MAX_SIZE = 10; // Size in centimeters
-const MAX_EXTRA_PILINGA_AMOUNT = 17; // Size in centimeters. Extra amount after small pilinga size.
-const BIG_PILINGA_MIN_SIZE = 18; // Size in centimeters
 const PILINGA_INSIDE_RATE = 0.30 // 30% chance of pilinga being inside
 
 const RESPONSES = {
@@ -28,18 +41,6 @@ const RESPONSES = {
         tagFn `<@${'userId'}> tiene unos impresionantes ${'pilingaSize'}cm de rica pilinga... ¡Pero adentro!`,
     ]),
 };
-
-const templateString = (strings, ...keys) => (
-    (dict = {}) => {
-        var result = [strings[0]];
-        keys.forEach(
-            (key, i) => {
-                result.push(dict[key], strings[i + 1])
-            }
-        );
-        return result.join('');
-    }
-);
 
 function getSize() {
     const isBadLuck = Math.random() <= SMALL_PILINGA_RATE;
