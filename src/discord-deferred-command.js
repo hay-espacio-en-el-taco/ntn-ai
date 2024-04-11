@@ -25,59 +25,23 @@ export async function triggerDeferredCommand(discordCommand, body) {
     Payload: JSON.stringify(payload),
   });
 
+  console.log('Wow such debugging before trigger lambda');
   try {
     await client.send(command);
   } catch (err) {
     console.error(new Error('Failed to trigger lambda'));
     console.error(err);
+    console.log('Wow such debugging after Error trigger lambda');
 
     return getDeferredResponse('Failed to trigger the deferred command');
   }
 
+  console.log('Wow such debugging after succcess trigger lambda');
   const textFn = typeof discordCommand.getDeferredLoadingStateText === 'function' ? discordCommand.getDeferredLoadingStateText : NoOp;
 
   return getDeferredResponse( textFn() );
 }
 
-
-// import { InteractionType, InteractionResponseType } from 'discord-interactions';
-// import DISCORD_BOT_COMMADS from './discord-bot-commads.js';
-// import { DiscordRequest } from './discord-utils.js';
-
-// const DISCORD_FUNCTIONS = {
-//   [InteractionType.PING]: () => {
-//     return { type: InteractionResponseType.PONG };
-//   },
-//   [InteractionType.APPLICATION_COMMAND]: async (body) => {
-//     const { data, application_id, token } = body;
-//     const { name } = data;
-//     const command = DISCORD_BOT_COMMADS[name];
-
-//     if (!command) {
-//       return {
-//         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-//         data: {
-//           content: '¡Ese comando ya no charcha! 😓'
-//         },
-//       };
-//     }
-
-//     const response = await command.handler(body);
-
-//     /**
-//      * Using the endpoint to update original response
-//      * https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response
-//      * 
-//      * 
-//      * Details about the payload:
-//      * https://discord.com/developers/docs/resources/webhook#edit-webhook-message
-//      */
-//     await DiscordRequest(`/webhooks/${application_id}/${token}/messages/@original`, {
-//       method: 'PATCH',
-//       body: response
-//     });
-//   },
-// }
 export default async function(body) {
   const interactionResponse = await getInteractionResponse(body);
 
