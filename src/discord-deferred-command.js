@@ -44,6 +44,7 @@ export default async function(body) {
     ...body,
     _preventDeferred: true,
   });
+  const { application_id, token } = body;
 
   /**
    * Using the endpoint to update original response
