@@ -6,7 +6,7 @@ const DISCORD_FUNCTIONS = {
   [InteractionType.PING]: () => {
     return { type: InteractionResponseType.PONG };
   },
-  [InteractionType.APPLICATION_COMMAND]: (body) => {
+  [InteractionType.APPLICATION_COMMAND]: async (body) => {
     const { data } = body;
     const { name } = data;
     const command = DISCORD_BOT_COMMADS[name];
@@ -21,7 +21,7 @@ const DISCORD_FUNCTIONS = {
     }
 
     if (command.isDeferred) {
-      const deferredResponse = triggerDeferredCommand(command, body);
+      const deferredResponse = await triggerDeferredCommand(command, body);
       
       return deferredResponse;
     }
@@ -37,10 +37,10 @@ const TESTING_FN = (body, headers) => {
   return { body, headers };
 }
 
-export function getInteractionResponse(body) {
+export async function getInteractionResponse(body) {
   const { type } = body;
 
-  return (DISCORD_FUNCTIONS[type] || TESTING_FN)(body)
+  return await (DISCORD_FUNCTIONS[type] || TESTING_FN)(body)
 }
 
 export async function main(signature, bodyRaw, discordPublicKey, isDevEnv = false) {
@@ -60,7 +60,7 @@ export async function main(signature, bodyRaw, discordPublicKey, isDevEnv = fals
     };
   }
 
-  const interactionResponse = getInteractionResponse(body);
+  const interactionResponse = await getInteractionResponse(body);
 
   return {
     statusCode: 200,

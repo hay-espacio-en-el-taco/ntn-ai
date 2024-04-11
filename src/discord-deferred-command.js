@@ -79,7 +79,7 @@ export async function triggerDeferredCommand(discordCommand, body) {
 //   },
 // }
 export default async function(body) {
-  const interactionResponse = getInteractionResponse(body);
+  const interactionResponse = await getInteractionResponse(body);
 
   /**
    * Using the endpoint to update original response
