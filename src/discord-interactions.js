@@ -6,8 +6,8 @@ const DISCORD_FUNCTIONS = {
   [InteractionType.PING]: () => {
     return { type: InteractionResponseType.PONG };
   },
-  [InteractionType.APPLICATION_COMMAND]: async (body, triggerDeferred = true) => {
-    const { data } = body;
+  [InteractionType.APPLICATION_COMMAND]: async (body) => {
+    const { data, preventDeferred } = body;
     const { name } = data;
     const command = DISCORD_BOT_COMMADS[name];
 
@@ -20,7 +20,7 @@ const DISCORD_FUNCTIONS = {
       };
     }
 
-    if (triggerDeferred && command.isDeferred) {
+    if (!preventDeferred && command.isDeferred) {
       const deferredResponse = await triggerDeferredCommand(command, body);
       
       return deferredResponse;
@@ -40,7 +40,7 @@ const TESTING_FN = (body, headers) => {
 export async function getInteractionResponse(body) {
   const { type } = body;
 
-  return await (DISCORD_FUNCTIONS[type] || TESTING_FN)(body)
+  return await (DISCORD_FUNCTIONS[type] || TESTING_FN)(body, triggerDeferred)
 }
 
 export async function main(signature, bodyRaw, discordPublicKey, isDevEnv = false) {
