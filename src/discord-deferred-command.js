@@ -1,7 +1,7 @@
 import { LambdaClient, InvokeCommand, InvocationType, LogType  } from "@aws-sdk/client-lambda";
 import { InteractionResponseType } from 'discord-interactions';
 import { getInteractionResponse } from './discord-interactions.js';
-import { NoOp } from './discord-utils.js';
+import { DiscordRequest, NoOp } from './discord-utils.js';
 
 function getDeferredResponse(text) {
   const textResponse = text || 'reflexionando...';
@@ -43,7 +43,7 @@ export async function triggerDeferredCommand(discordCommand, body) {
 }
 
 export default async function(body) {
-  const interactionResponse = await getInteractionResponse(body);
+  const interactionResponse = await getInteractionResponse(body, false);
 
   /**
    * Using the endpoint to update original response

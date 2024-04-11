@@ -6,7 +6,7 @@ const DISCORD_FUNCTIONS = {
   [InteractionType.PING]: () => {
     return { type: InteractionResponseType.PONG };
   },
-  [InteractionType.APPLICATION_COMMAND]: async (body) => {
+  [InteractionType.APPLICATION_COMMAND]: async (body, triggerDeferred = true) => {
     const { data } = body;
     const { name } = data;
     const command = DISCORD_BOT_COMMADS[name];
@@ -20,7 +20,7 @@ const DISCORD_FUNCTIONS = {
       };
     }
 
-    if (command.isDeferred) {
+    if (triggerDeferred && command.isDeferred) {
       const deferredResponse = await triggerDeferredCommand(command, body);
       
       return deferredResponse;
