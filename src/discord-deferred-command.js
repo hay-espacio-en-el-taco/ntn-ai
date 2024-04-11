@@ -25,29 +25,25 @@ export async function triggerDeferredCommand(discordCommand, body) {
     Payload: JSON.stringify(payload),
   });
 
-  console.log('Wow such debugging before trigger lambda');
   try {
     await client.send(command);
   } catch (err) {
     console.error(new Error('Failed to trigger lambda'));
     console.error(err);
-    console.log('Wow such debugging after Error trigger lambda');
 
     return getDeferredResponse('Failed to trigger the deferred command');
   }
 
-  console.log('Wow such debugging after succcess trigger lambda');
   const textFn = typeof discordCommand.getDeferredLoadingStateText === 'function' ? discordCommand.getDeferredLoadingStateText : NoOp;
 
   return getDeferredResponse( textFn() );
 }
 
 export default async function(body) {
-  const newBody = {
+  const interactionResponse = await getInteractionResponse({
     ...body,
-    preventDeferred: true,
-  }
-  const interactionResponse = await getInteractionResponse(newBody);
+    _preventDeferred: true,
+  });
 
   /**
    * Using the endpoint to update original response
