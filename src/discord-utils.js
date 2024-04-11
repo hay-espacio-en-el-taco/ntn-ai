@@ -1,5 +1,7 @@
 import fetch from 'node-fetch';
 
+export const NoOp = () => {};
+
 export async function DiscordRequest(endpoint, options) {
     // append endpoint to root API URL
     const url = 'https://discord.com/api/v10/' + endpoint;
@@ -22,4 +24,14 @@ export async function DiscordRequest(endpoint, options) {
     }
 
     return res;
+}
+
+export async function deferredResponse(handlerFn, body) {
+    const response = handlerFn(body);
+    const { application_id, token } = body;
+
+    await DiscordRequest(`/webhooks/${application_id}/${token}/messages/@original`, {
+        method: 'PATCH',
+        body: response
+    });
 }

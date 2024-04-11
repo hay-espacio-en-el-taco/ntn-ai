@@ -1,19 +1,6 @@
 import { InteractionType, InteractionResponseType, verifyKey } from 'discord-interactions';
 import DISCORD_BOT_COMMADS from './discord-bot-commads.js'
-
-// function getDeferredResponse(responseTextFn) {
-//   const hasProceduralTextFn = typeof responseTextFn === 'function';
-//   const textResponse = hasProceduralTextFn ? responseTextFn() : 'reflexionando...';
-
-//   console.log('Wow, such deferred text', textResponse);
-
-//   return {
-//     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-//     data: {
-//       content: textResponse
-//     }
-//   };
-// };
+import { triggerDeferredCommand } from './discord-deferred-command.js';
 
 const DISCORD_FUNCTIONS = {
   [InteractionType.PING]: () => {
@@ -33,12 +20,11 @@ const DISCORD_FUNCTIONS = {
       };
     }
 
-    console.log('Wow, such payload', JSON.stringify(body));
-
-    // if (command.isDeferred) {
-    //   deferredResponse(command.handler, body);
-    //   return getDeferredResponse(command.getDeferredLoadingStateText);
-    // }
+    if (command.isDeferred) {
+      const deferredResponse = triggerDeferredCommand(command, body);
+      
+      return deferredResponse;
+    }
 
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -49,6 +35,12 @@ const DISCORD_FUNCTIONS = {
 
 const TESTING_FN = (body, headers) => {
   return { body, headers };
+}
+
+export function getInteractionResponse(body) {
+  const { type } = body;
+
+  return (DISCORD_FUNCTIONS[type] || TESTING_FN)(body)
 }
 
 export async function main(signature, bodyRaw, discordPublicKey, isDevEnv = false) {
@@ -68,11 +60,12 @@ export async function main(signature, bodyRaw, discordPublicKey, isDevEnv = fals
     };
   }
 
-  const { type } = body;
+  const interactionResponse = getInteractionResponse(body);
+
   return {
     statusCode: 200,
-    body: JSON.stringify( (DISCORD_FUNCTIONS[type] || TESTING_FN)(body) )
-  }
+    body: JSON.stringify(interactionResponse)
+  };
 }
 
 export default main;
