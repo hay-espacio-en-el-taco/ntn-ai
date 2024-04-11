@@ -12,7 +12,7 @@ import {
     SMALL_PILINGA_MAX_SIZE,
     MAX_EXTRA_PILINGA_AMOUNT,
     BIG_PILINGA_MIN_SIZE
-} from './utils.js';import { templateString } from './utils.js';
+} from './utils.js';
 
 const SMALL_PILINGA_RATE = 0.10; // 10%   chance of small pilinga
 const PILINGA_INSIDE_RATE = .469 // 46.9% chance of pilinga being inside
