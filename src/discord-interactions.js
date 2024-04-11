@@ -40,7 +40,7 @@ const TESTING_FN = (body, headers) => {
 export async function getInteractionResponse(body) {
   const { type } = body;
 
-  return await (DISCORD_FUNCTIONS[type] || TESTING_FN)(body, triggerDeferred)
+  return await (DISCORD_FUNCTIONS[type] || TESTING_FN)(body)
 }
 
 export async function main(signature, bodyRaw, discordPublicKey, isDevEnv = false) {
