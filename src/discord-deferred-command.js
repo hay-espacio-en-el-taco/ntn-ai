@@ -16,7 +16,7 @@ function getDeferredResponse(text) {
 };
 
 export async function triggerDeferredCommand(discordCommand, body) {
-  const payload = { body, isDeferred }
+  const payload = { body, isDeferred: true };
   const client = new LambdaClient({});
   const command = new InvokeCommand({
     InvocationType: InvocationType.Event,
