@@ -21,9 +21,7 @@ const DISCORD_FUNCTIONS = {
     }
 
     if (!_preventDeferred && command.isDeferred) {
-      const deferredResponse = await triggerDeferredCommand(command, body);
-      
-      return deferredResponse;
+      return await triggerDeferredCommand(body);
     }
 
     return {

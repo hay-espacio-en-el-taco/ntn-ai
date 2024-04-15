@@ -1,21 +1,9 @@
 import { LambdaClient, InvokeCommand, InvocationType, LogType  } from "@aws-sdk/client-lambda";
 import { InteractionResponseType } from 'discord-interactions';
 import { getInteractionResponse } from './discord-interactions.js';
-import { DiscordRequest, NoOp } from './discord-utils.js';
+import { DiscordRequest } from './discord-utils.js';
 
-function getDeferredResponse(text) {
-  const textResponse = text || 'reflexionando...';
-  console.log('Wow, such deferred text', textResponse);
-
-  return {
-    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-    data: {
-      content: textResponse
-    }
-  };
-};
-
-export async function triggerDeferredCommand(discordCommand, body) {
+export async function triggerDeferredCommand(body) {
   const payload = { body, isDeferred: true };
   const client = new LambdaClient({});
   const command = new InvokeCommand({
@@ -31,12 +19,15 @@ export async function triggerDeferredCommand(discordCommand, body) {
     console.error(new Error('Failed to trigger lambda'));
     console.error(err);
 
-    return getDeferredResponse('Failed to trigger the deferred command');
+    return {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      content: 'Failed to trigger lambda'
+    };
   }
 
-  const textFn = typeof discordCommand.getDeferredLoadingStateText === 'function' ? discordCommand.getDeferredLoadingStateText : NoOp;
-
-  return getDeferredResponse( textFn() );
+  return {
+    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+  };
 }
 
 export default async function(body) {

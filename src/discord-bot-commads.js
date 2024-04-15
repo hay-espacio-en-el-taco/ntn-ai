@@ -1,4 +1,4 @@
-import pilingaFn, { generatePilingaSizingTextResponse } from './pilinga-command/pilinga-command.js'
+import pilingaFn from './pilinga-command/pilinga-command.js'
 
 const APPLICATION_COMMAND_TYPES = {
     /**
@@ -29,7 +29,6 @@ export default {
   'pilinga': {
     description: 'El bot te mide la pilinga, o bien, si eliges un usuario entonces se la mides tú a dicho usuario',
     type: APPLICATION_COMMAND_TYPES.CHAT_INPUT,
-    getDeferredLoadingStateText: generatePilingaSizingTextResponse,
     handler: pilingaFn,
     options: [
       {
@@ -40,11 +39,10 @@ export default {
       },
     ],
   },
-  'deferred-pilinga': {
+  'deferred-test': {
     isDeferred: true,
     description: 'El bot te mide la pilinga, o bien, si eliges un usuario entonces se la mides tú a dicho usuario',
     type: APPLICATION_COMMAND_TYPES.CHAT_INPUT,
-    getDeferredLoadingStateText: generatePilingaSizingTextResponse,
     handler: pilingaFn,
     options: [
       {
