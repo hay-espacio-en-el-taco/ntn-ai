@@ -21,7 +21,7 @@ export async function triggerDeferredCommand(discordCommand, body) {
   const command = new InvokeCommand({
     InvocationType: InvocationType.Event,
     LogType: LogType.Tail,
-    FunctionName: 'arn:aws:lambda:us-east-2:058264239687:function:ntnBot',
+    FunctionName: process.env.AWS_LAMBDA_ARN,
     Payload: JSON.stringify(payload),
   });
 
